@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript"
 import { UserModel } from "./user.model"
 import UserRepository from "./user.repository"
+import User from "../../../../modules/user/domain/user.entity"
 
 describe('UserRepository', () => {
   let sequelize: Sequelize
@@ -24,19 +25,14 @@ describe('UserRepository', () => {
   it('should create user', async () => {
     const repository = new UserRepository()
 
-    const data = {
-      id: '123',
-      name: 'Test',
-      email: 'email@email.com'
-    }
-
-    await repository.create(data)
+    const user = new User('Test', 'email@email.com', 'password')
+    await repository.create(user)
 
     const result = await UserModel.findOne({
-      where: { id: data.id }
+      where: { id: user.id }
     })
 
     expect(result).toBeDefined()
-    expect(result.id).toEqual(data.id)
+    expect(result.id).toEqual(user.id)
   })
 })
