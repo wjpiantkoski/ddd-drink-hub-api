@@ -29,7 +29,7 @@ describe('CompareUserPasswordService', () => {
 
     const compareUserPassword = new CompareUserPasswordService()
 
-    const result = await compareUserPassword.execute({
+    const result = await compareUserPassword.run({
       password,
       hashedPassword
     })
@@ -44,7 +44,7 @@ describe('CompareUserPasswordService', () => {
 
     const compareUserPassword = new CompareUserPasswordService()
 
-    const result = await compareUserPassword.execute({
+    const result = await compareUserPassword.run({
       password: 'wrong-password',
       hashedPassword
     })
