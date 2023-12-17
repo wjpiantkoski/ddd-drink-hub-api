@@ -3,9 +3,14 @@ import ICategoryRepository from "../../../../modules/beverage/repository/categor
 import CategoryModel from "./category.model";
 
 export default class CategoryRepository implements ICategoryRepository {
-  async exists(id: string): Promise<boolean> {
-    const count = await CategoryModel.count({ where: {id} })
-    return count > 0
+  async findById(id: string): Promise<Category> {
+    const category = await CategoryModel.findOne({ where: { id } })
+
+    if (!category) {
+      return null
+    }
+
+    return new Category(category.name, category.id)
   }
 
   async create(category: Category): Promise<void> {

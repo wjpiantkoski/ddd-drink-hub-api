@@ -54,7 +54,7 @@ describe('CategoryRepository', () => {
     expect(result.length).toEqual(categories.length)
   })
 
-  it('should return true if category exists', async () => {
+  it('should return get category by id', async () => {
     const category = new Category('Name')
 
     await CategoryModel.create({
@@ -63,18 +63,18 @@ describe('CategoryRepository', () => {
     })
 
     const repository = new CategoryRepository()
-    const result = await repository.exists(category.id)
+    const result = await repository.findById(category.id)
 
-    expect(result).toEqual(true)
+    expect(result).toBeDefined()
   })
 
-  it('should return false if category doesnt exists', async () => {
+  it('should return null if category doesnt exists', async () => {
     const category = new Category('Name')
 
     const repository = new CategoryRepository()
-    const result = await repository.exists(category.id)
+    const result = await repository.findById(category.id)
 
-    expect(result).toEqual(false)
+    expect(result).toBeNull()
   })
 
   it('should return all categories', async () => {
