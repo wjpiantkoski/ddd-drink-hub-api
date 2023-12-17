@@ -147,4 +147,33 @@ describe('BeverageRepository', () => {
     expect(result.name).toEqual(beverage.name)
     expect(result.description).toEqual(beverage.description)
   })
+
+  it('should delete beverage', async () => {
+    const category = new Category('Category Name')
+
+    await CategoryModel.create({
+      id: category.id,
+      name: category.name
+    })
+
+    const beverageId = uuidv4()
+
+    await BeverageModel.create({
+      name: 'Name',
+      id: beverageId,
+      userId: uuidv4(),
+      categoryId: category.id,
+      description: 'Description'
+    })
+
+    const repository = new BeverageRepository()
+
+    await repository.deleteById(beverageId)
+
+    const result = await BeverageModel.findOne({
+      where: { id: beverageId }
+    })
+
+    expect(result).toBeNull()
+  })
 })

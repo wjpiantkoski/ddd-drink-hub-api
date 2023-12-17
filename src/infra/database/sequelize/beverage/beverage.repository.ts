@@ -65,8 +65,8 @@ export default class BeverageRepository implements IBeverageRepository {
     })
   }
 
-  deleteById(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  async deleteById(id: string): Promise<void> {
+    await BeverageModel.destroy({ where: { id } })
   }
   
 }
