@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run tsc -- --noEmit && jest",
+    "test:watch": "npm test -- --watch",
     "tsc": "tsc"
   },
   "keywords": [],
