@@ -114,4 +114,37 @@ describe('BeverageRepository', () => {
     expect(results.length).toBeGreaterThan(0)
     expect(results[0].category.id).toEqual(category.id)
   })
+
+  it('should update beverage', async () => {
+    const category = new Category('Category Name')
+
+    await CategoryModel.create({
+      id: category.id,
+      name: category.name
+    })
+
+    const beverage = new Beverage({
+      category,
+      name: 'Name',
+      userId: uuidv4(),
+      description: 'Testing'
+    })
+
+    const repository = new BeverageRepository()
+
+    await repository.create(beverage)
+    
+    beverage.name = 'Another test'
+    beverage.description = 'Another description'
+
+    await repository.update(beverage)
+
+    const result = await BeverageModel.findOne({
+      where: { id: beverage.id }
+    })
+
+    expect(result).toBeDefined()
+    expect(result.name).toEqual(beverage.name)
+    expect(result.description).toEqual(beverage.description)
+  })
 })

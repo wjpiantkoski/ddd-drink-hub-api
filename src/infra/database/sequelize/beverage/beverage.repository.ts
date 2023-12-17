@@ -55,9 +55,16 @@ export default class BeverageRepository implements IBeverageRepository {
     })  
   }
 
-  update(beverage: Beverage): Promise<void> {
-    throw new Error("Method not implemented.");
+  async update(beverage: Beverage): Promise<void> {
+    await BeverageModel.update({
+      name: beverage.name,
+      categoryId: beverage.category.id,
+      description: beverage.description
+    }, {
+      where: { id: beverage.id }
+    })
   }
+
   deleteById(id: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
