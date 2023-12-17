@@ -56,4 +56,37 @@ describe('BeverageRepository', () => {
     expect(result).toBeDefined()
     expect(result.id).toEqual(beverage.id)
   })
+
+  it('should get beverage by id', async () => {
+    const category = new Category('Category Name')
+
+    await CategoryModel.create({
+      id: category.id,
+      name: category.name
+    })
+
+    const beverageId = uuidv4()
+
+    await BeverageModel.create({
+      name: 'Name',
+      id: beverageId,
+      userId: uuidv4(),
+      categoryId: category.id,
+      description: 'Description'
+    })
+
+    const repository = new BeverageRepository()
+
+    const result = await repository.findById(beverageId)
+
+    expect(result).toBeDefined()
+    expect(result.id).toEqual(beverageId)
+  })
+
+  it('should return null when beverage is not found', async () => {
+    const repository = new BeverageRepository()
+    const result = await repository.findById('123')
+
+    expect(result).toBeNull()
+  })
 })
