@@ -71,4 +71,18 @@ describe('CategoryRepository', () => {
 
     expect(result).toEqual(false)
   })
+
+  it('should return all categories', async () => {
+    const category = new Category('Name')
+
+    await CategoryModel.create({
+      id: category.id,
+      name: category.name
+    })
+
+    const repository = new CategoryRepository()
+    const result = await repository.findAll()
+
+    expect(result.length).toEqual(1)
+  })
 })

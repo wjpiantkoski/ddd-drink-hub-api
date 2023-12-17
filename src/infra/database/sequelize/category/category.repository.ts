@@ -25,7 +25,12 @@ export default class CategoryRepository implements ICategoryRepository {
 
     await CategoryModel.bulkCreate(items)
   }
-  findAll(): Promise<Category[]> {
-    throw new Error("Method not implemented.");
+
+  async findAll(): Promise<Category[]> {
+    const results = await CategoryModel.findAll()
+
+    return results.map(item => {
+      return new Category(item.name, item.id)
+    })
   }
 }
