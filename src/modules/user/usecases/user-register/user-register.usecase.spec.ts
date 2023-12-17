@@ -1,8 +1,6 @@
 import { Sequelize } from "sequelize-typescript"
 import { UserModel } from "../../../../infra/database/sequelize/user/user.model"
-import UserRegisterUsecase from "./user-register.usecase"
-import UserRepository from "../../../../infra/database/sequelize/user/user.repository"
-import HashUserPasswordService from "../../services/hash-user-password/hash-user-password.service"
+import UserRegisterUsecaseFactory from "./user-register.usecase.factory"
 
 describe('UserRegisterUsecase', () => {
   let sequelize: Sequelize
@@ -29,10 +27,7 @@ describe('UserRegisterUsecase', () => {
       password: 'any-password'
     }
 
-    const usecase = new UserRegisterUsecase(
-      new UserRepository(),
-      new HashUserPasswordService()
-    )
+    const usecase = UserRegisterUsecaseFactory.create()
 
     const result = await usecase.execute(input)
 
@@ -48,10 +43,7 @@ describe('UserRegisterUsecase', () => {
       password: 'any-password'
     }
 
-    const usecase = new UserRegisterUsecase(
-      new UserRepository(),
-      new HashUserPasswordService()
-    )
+    const usecase = UserRegisterUsecaseFactory.create()
 
     await usecase.execute(input)
     
