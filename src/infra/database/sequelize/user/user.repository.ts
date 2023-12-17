@@ -5,12 +5,16 @@ import { UserModel } from "./user.model";
 
 export default class UserRepository implements IUserRepository {
   async create(data: User): Promise<void> {
-    await UserModel.create({
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      password: data.password
-    })
+    try {
+      await UserModel.create({
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        password: data.password
+      })
+    } catch (err) {
+      console.error(err)
+    }
   }
   findOne(query: any): Promise<any> {
     throw new Error("Method not implemented.");

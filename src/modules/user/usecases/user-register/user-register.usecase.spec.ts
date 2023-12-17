@@ -10,13 +10,12 @@ describe('UserRegisterUsecase', () => {
   beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: 'sqlite',
-      storage: ':memory',
-      logging: false,
-      sync: { force: true }
+      storage: ':memory:',
+      logging: false
     })
 
     await sequelize.addModels([ UserModel ])
-    await sequelize.sync()
+    await sequelize.sync({force: true})
   })
 
   afterEach(async () => {

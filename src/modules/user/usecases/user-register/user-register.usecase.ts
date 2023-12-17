@@ -26,7 +26,7 @@ export default class UserRegisterUsecase implements IUsecase {
     const hashedPassword = await this.hashUserPassword.run(input.password)
     const user = new User(input.name, input.email, hashedPassword)
 
-    // await this.userRepository.create(new User(input.name, input.email, hashedPassword, user.id))
+    await this.userRepository.create(new User(input.name, input.email, hashedPassword, user.id))
 
     return {
       id: user.id,
