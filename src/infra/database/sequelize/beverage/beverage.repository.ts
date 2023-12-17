@@ -26,8 +26,23 @@ export default class BeverageRepository implements IBeverageRepository {
     })
   }
 
-  findByCategoryId(categoryId: string): Promise<Beverage[]> {
-    throw new Error("Method not implemented.");
+  async findByCategoryId(categoryId: string): Promise<Beverage[]> {
+    const items = await BeverageModel.findAll({
+      where: { categoryId },
+      include: [CategoryModel]
+    })
+
+    return items.map(item => {
+      const category = new Category(item.category.name, item.category.id)
+
+      return new Beverage({
+        category,
+        id: item.id,
+        name: item.name,
+        userId: item.userId,
+        description: item.description
+      })
+    })
   }
 
   async create(beverage: Beverage): Promise<void> {

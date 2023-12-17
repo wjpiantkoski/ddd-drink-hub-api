@@ -89,4 +89,29 @@ describe('BeverageRepository', () => {
 
     expect(result).toBeNull()
   })
+
+  it('should list beverages by category id', async () => {
+    const category = new Category('Category Name')
+
+    await CategoryModel.create({
+      id: category.id,
+      name: category.name
+    })
+
+    const beverageId = uuidv4()
+
+    await BeverageModel.create({
+      name: 'Name',
+      id: beverageId,
+      userId: uuidv4(),
+      categoryId: category.id,
+      description: 'Description'
+    })
+
+    const repository = new BeverageRepository()
+    const results = await repository.findByCategoryId(category.id)
+
+    expect(results.length).toBeGreaterThan(0)
+    expect(results[0].category.id).toEqual(category.id)
+  })
 })
