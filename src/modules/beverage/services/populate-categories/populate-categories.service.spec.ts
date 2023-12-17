@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript"
 import CategoryModel from "../../../../infra/database/sequelize/category/category.model"
 import PopulateCategoriesServiceFactory from "./populate-categories.service.factory"
+import BeverageModel from "../../../../infra/database/sequelize/beverage/beverage.model"
 
 describe('PopulateCategoriesService', () => {
   let sequelize: Sequelize
@@ -12,7 +13,11 @@ describe('PopulateCategoriesService', () => {
       logging: false
     })
 
-    await sequelize.addModels([ CategoryModel ])
+    await sequelize.addModels([ 
+      CategoryModel,
+      BeverageModel
+    ])
+    
     await sequelize.sync({force: true})
   })
 

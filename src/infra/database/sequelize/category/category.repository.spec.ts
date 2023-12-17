@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize-typescript"
 import CategoryModel from "./category.model"
 import CategoryRepository from "./category.repository"
 import Category from "../../../../modules/beverage/domain/category/category.entity"
+import BeverageModel from "../beverage/beverage.model"
 
 describe('CategoryRepository', () => {
   let sequelize: Sequelize
@@ -13,7 +14,11 @@ describe('CategoryRepository', () => {
       logging: false
     })
 
-    await sequelize.addModels([ CategoryModel ])
+    await sequelize.addModels([ 
+      CategoryModel,
+      BeverageModel
+    ])
+
     await sequelize.sync({force: true})
   })
 
