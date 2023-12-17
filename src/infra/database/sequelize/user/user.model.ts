@@ -16,4 +16,7 @@ export class UserModel extends Model {
   @Column({allowNull: false})
   declare email: string
 
+  @Column({allowNull: false})
+  declare password: string
+
 }
