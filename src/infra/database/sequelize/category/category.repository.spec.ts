@@ -48,4 +48,27 @@ describe('CategoryRepository', () => {
 
     expect(result.length).toEqual(categories.length)
   })
+
+  it('should return true if category exists', async () => {
+    const category = new Category('Name')
+
+    await CategoryModel.create({
+      id: category.id,
+      name: category.name
+    })
+
+    const repository = new CategoryRepository()
+    const result = await repository.exists(category.id)
+
+    expect(result).toEqual(true)
+  })
+
+  it('should return false if category doesnt exists', async () => {
+    const category = new Category('Name')
+
+    const repository = new CategoryRepository()
+    const result = await repository.exists(category.id)
+
+    expect(result).toEqual(false)
+  })
 })
