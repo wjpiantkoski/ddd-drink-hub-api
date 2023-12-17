@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize-typescript"
 import { UserModel } from "./user.model"
 import UserRepository from "./user.repository"
 import User from "../../../../modules/user/domain/user.entity"
+import {v4 as uuidv4} from 'uuid'
 
 describe('UserRepository', () => {
   let sequelize: Sequelize
@@ -33,5 +34,22 @@ describe('UserRepository', () => {
 
     expect(result).toBeDefined()
     expect(result.id).toEqual(user.id)
+  })
+
+  it('should get a user by email', async () => {
+    const user = {
+      id: uuidv4(),
+      name: 'Name',
+      email: 'email@email.com',
+      password: 'any-pass'
+    }
+
+    await UserModel.create(user)
+
+    const repository = new UserRepository()
+    const result = await repository.findByEmail(user.email)
+
+    expect(result).toBeDefined()
+    expect(result.email).toEqual(user.email)
   })
 })
