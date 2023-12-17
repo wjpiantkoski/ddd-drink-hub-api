@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run tsc -- --noEmit && jest",
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "Willian Piantkoski <wjpiantkoski@gmail.com>",
