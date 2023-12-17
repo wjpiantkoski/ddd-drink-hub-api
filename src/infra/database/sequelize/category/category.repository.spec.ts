@@ -1,0 +1,37 @@
+import { Sequelize } from "sequelize-typescript"
+import CategoryModel from "./category.model"
+import CategoryRepository from "./category.repository"
+import Category from "../../../../modules/beverage/domain/category/category.entity"
+
+describe('CategoryRepository', () => {
+  let sequelize: Sequelize
+
+  beforeEach(async () => {
+    sequelize = new Sequelize({
+      dialect: 'sqlite',
+      storage: ':memory:',
+      logging: false
+    })
+
+    await sequelize.addModels([ CategoryModel ])
+    await sequelize.sync({force: true})
+  })
+
+  afterEach(async () => {
+    await sequelize.close()
+  })
+
+  it('should create category', async () => {
+    const category = new Category('Name')
+    const repository = new CategoryRepository()
+
+    await repository.create(category)
+
+    const result = await CategoryModel.findOne({
+      where: { id: category.id }
+    })
+
+    expect(result).toBeDefined()
+    expect(result.name).toEqual(category.name)
+  })
+})
