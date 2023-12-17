@@ -14,8 +14,15 @@ export default class CategoryRepository implements ICategoryRepository {
     })
   }
 
-  createMany(categories: Category[]): Promise<void> {
-    throw new Error("Method not implemented.");
+  async createMany(categories: Category[]): Promise<void> {
+    const items = categories.map(category => {
+      return {
+        id: category.id,
+        name: category.name
+      }
+    })
+
+    await CategoryModel.bulkCreate(items)
   }
   findAll(): Promise<Category[]> {
     throw new Error("Method not implemented.");

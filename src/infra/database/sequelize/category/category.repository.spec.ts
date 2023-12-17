@@ -34,4 +34,18 @@ describe('CategoryRepository', () => {
     expect(result).toBeDefined()
     expect(result.name).toEqual(category.name)
   })
+
+  it('should create many categories', async () => {
+    const category1 = new Category('Name 1')
+    const category2 = new Category('Name 2')
+    const categories = [category1, category2]
+
+    const repository = new CategoryRepository()
+
+    await repository.createMany(categories)
+
+    const result = await CategoryModel.findAll()
+
+    expect(result.length).toEqual(categories.length)
+  })
 })
