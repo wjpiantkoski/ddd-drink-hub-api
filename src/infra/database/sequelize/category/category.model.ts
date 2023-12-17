@@ -1,4 +1,6 @@
 import { Column, Model, PrimaryKey, Table, HasMany } from "sequelize-typescript"
+import BeverageModel from "../beverage/beverage.model"
+import Beverage from "../../../../modules/beverage/domain/beverage/beverage.entity"
 
 @Table({
   tableName: 'categories',
@@ -14,4 +16,7 @@ export default class CategoryModel extends Model {
     unique: true
   })
   declare name: string
+
+  @HasMany(() => BeverageModel)
+  declare beverages: Beverage[]
 }
