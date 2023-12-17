@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npm run tsc -- --noEmit && jest",
     "test:watch": "npm test -- --watch",
+    "test:watchAll": "npm test -- --watchAll",
     "tsc": "tsc"
   },
   "keywords": [],
@@ -15,6 +16,8 @@
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.148",
     "@swc/jest": "^0.2.20",
+    "@types/bcrypt": "^5.0.2",
+    "@types/dotenv": "^8.2.0",
     "@types/jest": "^27.4.1",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^8.3.4",
@@ -30,6 +33,8 @@
     }
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.17.0",
     "sequelize-typescript": "^2.1.3",
