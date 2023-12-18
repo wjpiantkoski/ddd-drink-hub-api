@@ -2,6 +2,7 @@ import {Request, Response, Router} from 'express'
 import CreateBookmarkUsecaseFactory from '../../../../modules/beverage/usecases/create-bookmark/create-bookmark.usecase.factory'
 import RemoveBookmarkUsecaseFactory from '../../../../modules/beverage/usecases/remove-bookmark/remove-bookmark.usecase.factory'
 import ListUserBookmarksUsecaseFactory from '../../../../modules/beverage/usecases/list-user-bookmarks/list-user-bookmark.usecase.factory'
+import { validateBookmarkPost } from '../middlewares/validations/bookmark/validate-bookmark-post.middleware'
 
 export default class BookmarksRouter {
   private _router = Router()
@@ -15,7 +16,7 @@ export default class BookmarksRouter {
   }
 
   private routes(): void {
-    this.router.post('/', async (req: Request, res: Response) => {
+    this.router.post('/', validateBookmarkPost, async (req: Request, res: Response) => {
       try {
         const createBookmark = CreateBookmarkUsecaseFactory.create()
         const {status, data} = await createBookmark.execute(req.body)
