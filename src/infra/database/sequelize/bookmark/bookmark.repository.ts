@@ -42,7 +42,8 @@ export default class BookmarkRepository implements IBookmarkRepository {
         id: bookmark.beverage.id,
         name: bookmark.beverage.name,
         userId: bookmark.beverage.userId,
-        description: bookmark.beverage.description
+        description: bookmark.beverage.description,
+        image: bookmark.beverage.image
       })
 
       return new Bookmark(bookmark.userId, beverage, bookmark.id)
