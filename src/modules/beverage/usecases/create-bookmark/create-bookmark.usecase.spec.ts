@@ -93,6 +93,8 @@ describe('CreateBookmarkUsecase', () => {
       beverageId: beverage.id
     }
 
-    await expect(usecase.execute(bookmark)).rejects.toThrow('Beverage not found')
+    const {status} = await usecase.execute(bookmark)
+
+    expect(status).toEqual(400)
   })
 })
