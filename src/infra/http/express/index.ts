@@ -3,6 +3,7 @@ import path from 'path'
 import helmet from 'helmet'
 import express from 'express'
 import compression from 'compression'
+import fileupload from 'express-fileupload'
 import UsersRouter from './routes/users.router'
 import CategoriesRouter from './routes/categories.router'
 import BeveragesRouter from './routes/beverages.router'
@@ -45,6 +46,13 @@ export default class App {
     this.app.use(cors({
         origin: '*',
         methods: 'GET,PUT,POST,DELETE'
+    }))
+
+    this.app.use(fileupload({
+      limits: {
+        files: 1,
+        fileSize: 10 * 1024 * 1024
+      }
     }))
 
     this.app.use(compression())
