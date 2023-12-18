@@ -4,6 +4,7 @@ import UpdateBeverageUsecaseFactory from '../../../../modules/beverage/usecases/
 import ShowBeverageUsecaseFactory from '../../../../modules/beverage/usecases/show-beverage/show-beverage.usecase.factory'
 import RemoveBeverageUsecaseFactory from '../../../../modules/beverage/usecases/remove-beverage/remove-beverage.usecase.factory'
 import ListBeverageByCategoryUsecaseFactory from '../../../../modules/beverage/usecases/list-beverages-by-category/list-beverage-by-category.usecase.factory'
+import { imageUpload } from '../middlewares/image-upload.middleware'
 
 export default class BeveragesRouter {
   private _router = Router()
@@ -17,7 +18,7 @@ export default class BeveragesRouter {
   }
 
   private routes(): void {
-    this.router.post('/', async (req: Request, res: Response) => {
+    this.router.post('/', imageUpload, async (req: Request, res: Response) => {
       try {
         const input = {
           ...req.body,
