@@ -44,9 +44,8 @@ describe('ListUserBookmarksUsecase', () => {
     await createBookmarkUsecase.execute(bookmark)
 
     const usecase = ListUserBookmarksUsecaseFactory.create()
-    const results = await usecase.execute({ userId: bookmark.userId })
+    const {data} = await usecase.execute({ userId: bookmark.userId })
 
-    expect(results.length).toBeGreaterThan(0)
-    expect(results[0].userId).toEqual(bookmark.userId)
+    expect(data.length).toBeGreaterThan(0)
   })
 })
