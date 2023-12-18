@@ -6,7 +6,7 @@ import BeverageRepository from "../../../../infra/database/sequelize/beverage/be
 import Beverage from "../../domain/beverage/beverage.entity"
 import CreateBookmarkUsecaseFactory from "../create-bookmark/create-bookmark.usecase.factory"
 import {v4 as uuidv4} from 'uuid'
-import ListUserBookmarksUsecaseFactory from "./list-user-bookmarks.usecase.factory"
+import ListUserBookmarksUsecaseFactory from "./list-user-bookmark.usecase.factory"
 
 describe('ListUserBookmarksUsecase', () => {
   let sequelize: Sequelize

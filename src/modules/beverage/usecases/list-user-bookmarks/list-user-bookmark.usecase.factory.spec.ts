@@ -1,5 +1,5 @@
 import ListUserBookmarksUsecase from "./list-user-bookmarks.usecase"
-import ListUserBookmarksUsecaseFactory from "./list-user-bookmarks.usecase.factory"
+import ListUserBookmarksUsecaseFactory from "./list-user-bookmark.usecase.factory"
 
 describe('ListUserBookmarksUsecaseFactory', () => {
   it('should create ListUserBookmarksUsecase', () => {
