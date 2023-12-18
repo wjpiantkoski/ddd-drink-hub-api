@@ -46,7 +46,7 @@ export default class UserLoginUsecase implements IUsecase {
 
     return {
       status: 200,
-      data: {token}
+      data: token
     }
   }
   
