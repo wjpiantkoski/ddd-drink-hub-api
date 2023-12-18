@@ -4,16 +4,19 @@ import express from 'express'
 import compression from 'compression'
 import UsersRouter from './routes/users.router'
 import CategoriesRouter from './routes/categories.router'
+import BeveragesRouter from './routes/beverages.router'
 
 export default class App {
   public app
   public usersRouter: UsersRouter
   public categoriesRouter: CategoriesRouter
+  public beveragesRouter: BeveragesRouter
 
   constructor() {
     this.app = express()
     this.usersRouter = new UsersRouter()
     this.categoriesRouter = new CategoriesRouter()
+    this.beveragesRouter = new BeveragesRouter()
 
     this.middlewares()
     this.routes()
@@ -22,6 +25,7 @@ export default class App {
   private routes(): void {
     this.app.use('/users', this.usersRouter.router)
     this.app.use('/categories', this.categoriesRouter.router)
+    this.app.use('/beverages', this.beveragesRouter.router)
   }
 
   private middlewares(): void {
