@@ -6,6 +6,7 @@ import {v4 as uuidv4} from 'uuid'
 import Category from "../../../../modules/beverage/domain/category/category.entity"
 import Beverage from "../../../../modules/beverage/domain/beverage/beverage.entity"
 import BeverageRepository from "./beverage.repository"
+import BookmarkModel from "../bookmark/bookmark.model"
 
 describe('BeverageRepository', () => {
   let sequelize: Sequelize
@@ -20,7 +21,8 @@ describe('BeverageRepository', () => {
     await sequelize.addModels([ 
       UserModel,
       CategoryModel,
-      BeverageModel
+      BeverageModel,
+      BookmarkModel
     ])
 
     await sequelize.sync({force: true})
