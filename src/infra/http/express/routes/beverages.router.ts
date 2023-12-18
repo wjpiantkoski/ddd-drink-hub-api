@@ -2,6 +2,7 @@ import {Request, Response, Router} from 'express'
 import CreateBeverageUsecaseFactory from '../../../../modules/beverage/usecases/create-beverage/create-beverage.usecase.factory'
 import UpdateBeverageUsecaseFactory from '../../../../modules/beverage/usecases/update-beverage/update-beverage.usecase.factory'
 import ShowBeverageUsecaseFactory from '../../../../modules/beverage/usecases/show-beverage/show-beverage.usecase.factory'
+import RemoveBeverageUsecaseFactory from '../../../../modules/beverage/usecases/remove-beverage/remove-beverage.usecase.factory'
 
 export default class BeveragesRouter {
   private _router = Router()
@@ -46,6 +47,20 @@ export default class BeveragesRouter {
         const {status, data} = await updateBeverageUsecase.execute({
           beverageId: req.params.id,
           beverage: req.body
+        })
+
+        res.status(status).send(data)
+      } catch {
+        res.status(500).send()
+      }
+    })
+
+    this.router.delete('/:id', async (req: Request, res: Response) => {
+      try {
+        const removeBeverageUsecase = RemoveBeverageUsecaseFactory.create()
+        
+        const {status, data} = await removeBeverageUsecase.execute({
+          beverageId: req.params.id
         })
 
         res.status(status).send(data)
