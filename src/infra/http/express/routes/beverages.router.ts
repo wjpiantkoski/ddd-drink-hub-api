@@ -1,6 +1,7 @@
 import {Request, Response, Router} from 'express'
 import CreateBeverageUsecaseFactory from '../../../../modules/beverage/usecases/create-beverage/create-beverage.usecase.factory'
 import UpdateBeverageUsecaseFactory from '../../../../modules/beverage/usecases/update-beverage/update-beverage.usecase.factory'
+import ShowBeverageUsecaseFactory from '../../../../modules/beverage/usecases/show-beverage/show-beverage.usecase.factory'
 
 export default class BeveragesRouter {
   private _router = Router()
@@ -18,6 +19,20 @@ export default class BeveragesRouter {
       try {
         const createBeverageUsecase = CreateBeverageUsecaseFactory.create()
         const {status, data} = await createBeverageUsecase.execute(req.body)
+        res.status(status).send(data)
+      } catch {
+        res.status(500).send()
+      }
+    })
+
+    this.router.get('/:id', async (req: Request, res: Response) => {
+      try {
+        const showBeverageUsecase = ShowBeverageUsecaseFactory.create()
+        
+        const {status, data} = await showBeverageUsecase.execute({
+          beverageId: req.params.id
+        })
+
         res.status(status).send(data)
       } catch {
         res.status(500).send()
