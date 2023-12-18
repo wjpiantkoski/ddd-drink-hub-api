@@ -37,8 +37,8 @@ describe('ListBeverageByCategoryUsecase', () => {
 
     const usecase = ListBeverageByCategoryUsecaseFactory.create()
 
-    const results = await usecase.execute(category.id)
+    const {data} = await usecase.execute(category.id)
 
-    expect(results.length).toBeGreaterThan(0)
+    expect(data.length).toBeGreaterThan(0)
   })
 })
