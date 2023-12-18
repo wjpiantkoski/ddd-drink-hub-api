@@ -12,7 +12,8 @@ describe('Bookmark', () => {
     category,
     name: 'Test',
     description: 'Description',
-    userId: uuidv4()
+    userId: uuidv4(),
+    image: `${uuidv4()}.png`
   }
 
   const beverage = new Beverage(props)
