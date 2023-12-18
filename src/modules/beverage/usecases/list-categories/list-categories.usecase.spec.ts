@@ -21,8 +21,8 @@ describe('ListCategoriesUsecase', () => {
     })
 
     const usecase = ListCategoriesUsecaseFactory.create()
-    const results = await usecase.execute()
+    const {data} = await usecase.execute()
 
-    expect(results.length).toBeGreaterThan(0)
+    expect(data.length).toBeGreaterThan(0)
   })
 })
