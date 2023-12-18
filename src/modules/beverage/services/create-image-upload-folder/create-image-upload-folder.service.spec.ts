@@ -13,7 +13,7 @@ describe('CreateImageUploadFolderService', () => {
   it('should create image upload folder', async () => {
     const service = new CreateImageUploadFolderService()
     
-    await service.run(folderPath)
+    await service.run()
     
     const folderCreated = await fs.existsSync(folderPath)
 
