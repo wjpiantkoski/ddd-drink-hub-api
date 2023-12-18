@@ -1,6 +1,7 @@
 import {Request, Response, Router} from 'express'
 import CreateBookmarkUsecaseFactory from '../../../../modules/beverage/usecases/create-bookmark/create-bookmark.usecase.factory'
 import RemoveBookmarkUsecaseFactory from '../../../../modules/beverage/usecases/remove-bookmark/remove-bookmark.usecase.factory'
+import ListUserBookmarksUsecaseFactory from '../../../../modules/beverage/usecases/list-user-bookmarks/list-user-bookmark.usecase.factory'
 
 export default class BookmarksRouter {
   private _router = Router()
@@ -21,6 +22,20 @@ export default class BookmarksRouter {
         res.status(status).send(data)
       } catch (err) {
         console.error(err)
+        res.status(500).send()
+      }
+    })
+
+    this.router.get('/users/:id', async (req: Request, res: Response) => {
+      try {
+        const listBookmarksUsecase = ListUserBookmarksUsecaseFactory.create()
+
+        const {status, data} = await listBookmarksUsecase.execute({
+          userId: req.params.id
+        })
+
+        res.status(status).send(data)
+      } catch {
         res.status(500).send()
       }
     })

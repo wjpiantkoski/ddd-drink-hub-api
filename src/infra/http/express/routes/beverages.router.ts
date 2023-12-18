@@ -3,6 +3,7 @@ import CreateBeverageUsecaseFactory from '../../../../modules/beverage/usecases/
 import UpdateBeverageUsecaseFactory from '../../../../modules/beverage/usecases/update-beverage/update-beverage.usecase.factory'
 import ShowBeverageUsecaseFactory from '../../../../modules/beverage/usecases/show-beverage/show-beverage.usecase.factory'
 import RemoveBeverageUsecaseFactory from '../../../../modules/beverage/usecases/remove-beverage/remove-beverage.usecase.factory'
+import ListBeverageByCategoryUsecaseFactory from '../../../../modules/beverage/usecases/list-beverages-by-category/list-beverage-by-category.usecase.factory'
 
 export default class BeveragesRouter {
   private _router = Router()
@@ -20,6 +21,16 @@ export default class BeveragesRouter {
       try {
         const createBeverageUsecase = CreateBeverageUsecaseFactory.create()
         const {status, data} = await createBeverageUsecase.execute(req.body)
+        res.status(status).send(data)
+      } catch {
+        res.status(500).send()
+      }
+    })
+
+    this.router.get('/categories/:id', async (req: Request, res: Response) => {
+      try {
+        const listBeveragesUsecase = ListBeverageByCategoryUsecaseFactory.create()
+        const {status, data} = await listBeveragesUsecase.execute(req.params.id)
         res.status(status).send(data)
       } catch {
         res.status(500).send()
