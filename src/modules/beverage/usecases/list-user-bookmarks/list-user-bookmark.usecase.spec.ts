@@ -30,7 +30,8 @@ describe('ListUserBookmarksUsecase', () => {
       category,
       name: 'Beverage',
       userId: uuidv4(),
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     })
 
     await beverageRepository.create(beverage)

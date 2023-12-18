@@ -19,7 +19,8 @@ export default class ListUserBookmarksUsecase implements IUsecase {
         beverage: {
           id: item.beverage.id,
           name: item.beverage.name,
-          category: item.beverage.category.name
+          category: item.beverage.category.name,
+          image: item.beverage.image
         }
       }
     })

@@ -3,12 +3,14 @@ import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import Beverage from "../../domain/beverage/beverage.entity";
 import IBeverageRepository from "../../repository/beverage.repository.interface";
 import ICategoryRepository from "../../repository/category.repository.interface";
+import BeverageImageUploadService from "../../services/beverage-image-upload/beverage-image-upload.service";
 
 export interface CreateBeverageUsecaseInput {
   name: string
   userId: string
   categoryId: string
-  description: string
+  description: string,
+  image: any
 }
 
 export default class CreateBeverageUsecase implements IUsecase {
@@ -33,6 +35,7 @@ export default class CreateBeverageUsecase implements IUsecase {
     const beverage = new Beverage({
       category,
       name: input.name,
+      image: input.image,
       userId: input.userId,
       description: input.description
     })
