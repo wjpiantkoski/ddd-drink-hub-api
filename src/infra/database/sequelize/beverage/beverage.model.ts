@@ -1,7 +1,9 @@
-import { BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript"
+import { BelongsTo, Column, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript"
 import CategoryModel from "../category/category.model"
 import { UserModel } from "../user/user.model"
 import Category from "../../../../modules/beverage/domain/category/category.entity"
+import BookmarkModel from "../bookmark/bookmark.model"
+import Bookmark from "../../../../modules/beverage/domain/bookmark/bookmark.entity"
 
 @Table({
   tableName: 'beverages',
@@ -31,4 +33,7 @@ export default class BeverageModel extends Model {
   @ForeignKey(() => UserModel)
   @Column({ allowNull: false })
   declare userId: string
+
+  @HasMany(() => BookmarkModel)
+  declare bookmarks: Bookmark[]
 }
