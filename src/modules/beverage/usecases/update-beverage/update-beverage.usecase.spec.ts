@@ -68,14 +68,16 @@ describe('UpdateBeverageUsecase', () => {
   it('should not update beverage when is not found', async () => {
     const usecase = UpdateBeverageUsecaseFactory.create()
 
-    await expect(usecase.execute({
+    const {status} = await usecase.execute({
       beverageId: '123',
       beverage: {
         name: 'Test',
         categoryId: 'category-id',
         description: 'Description'
       }
-    })).rejects.toThrow('Beverage not found')
+    })
+
+    expect(status).toEqual(404)
   })
 
   it('should not update beverage when category is not found', async () => {
@@ -104,9 +106,11 @@ describe('UpdateBeverageUsecase', () => {
       categoryId: '123'
     }
 
-    await expect(usecase.execute({
+    const {status} = await usecase.execute({
       beverageId: beverage.id,
       beverage: beverageData
-    })).rejects.toThrow('Category not found')
+    })
+
+    expect(status).toEqual(400)
   })
 })
