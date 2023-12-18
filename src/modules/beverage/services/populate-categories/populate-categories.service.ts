@@ -7,6 +7,12 @@ export default class PopulateCategoriesService implements IService {
   constructor(private categoryRepository: ICategoryRepository) {}
 
   async run(): Promise<void> {
+    const currentCategories = await this.categoryRepository.findAll()
+
+    if (currentCategories.length) {
+      return
+    }
+
     const categories = [
       new Category("Cerveja"),
       new Category("Vinho Tinto"),
