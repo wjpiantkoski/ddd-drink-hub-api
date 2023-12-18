@@ -1,3 +1,4 @@
+import IService from "../../../../@shared/domain/service/service.interface";
 import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
 import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import IBeverageRepository from "../../repository/beverage.repository.interface";
@@ -8,10 +9,20 @@ export interface RemoveBeverageUsecaseInput {
 
 export default class RemoveBeverageUsecase implements IUsecase {
 
-  constructor(private beverageRepository: IBeverageRepository) {}
+  constructor(
+    private beverageRepository: IBeverageRepository,
+    private removeBeverageImage: IService
+  ) {}
 
   async execute(input: RemoveBeverageUsecaseInput): Promise<UsecaseResponse> {
-    await this.beverageRepository.deleteById(input.beverageId)
+    const beverage = await this.beverageRepository.findById(input.beverageId)
+
+    if (beverage) {
+      await Promise.all([
+        this.removeBeverageImage.run(beverage.image),
+        this.beverageRepository.deleteById(input.beverageId)
+      ])
+    }
     
     return {
       status: 204,

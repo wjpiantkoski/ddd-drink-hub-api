@@ -5,6 +5,10 @@ import fs from 'fs'
 export default class RemoveBeverageImageService implements IService {
   async run(input: string): Promise<void> {
     const fullPath = path.join(__dirname, '../../../../infra/images', input)
-    await fs.rmSync(fullPath)
+    const imageExists = await fs.existsSync(fullPath)
+
+    if (imageExists) {
+      await fs.rmSync(fullPath)
+    }
   }  
 }
