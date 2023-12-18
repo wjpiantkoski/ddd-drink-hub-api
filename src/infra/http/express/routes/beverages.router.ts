@@ -7,6 +7,7 @@ import ListBeverageByCategoryUsecaseFactory from '../../../../modules/beverage/u
 import { imageUpload } from '../middlewares/image-upload.middleware'
 import { sanitizeBeverage } from '../middlewares/sanitization/sanitize-beverage.middleware'
 import { validateBeveragePost } from '../middlewares/validations/beverage/validate-beverage-post.middleware'
+import { validateBeveragePatch } from '../middlewares/validations/beverage/validate-beverage-patch.middlware'
 
 export default class BeveragesRouter {
   private _router = Router()
@@ -62,8 +63,9 @@ export default class BeveragesRouter {
 
     this.router.patch(
       '/:id', 
-      imageUpload,
       sanitizeBeverage, 
+      validateBeveragePatch,
+      imageUpload,
       async (req: Request, res: Response) => {
         try {
           const updateBeverageUsecase = UpdateBeverageUsecaseFactory.create()
