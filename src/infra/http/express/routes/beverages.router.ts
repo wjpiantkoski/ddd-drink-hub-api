@@ -6,6 +6,7 @@ import RemoveBeverageUsecaseFactory from '../../../../modules/beverage/usecases/
 import ListBeverageByCategoryUsecaseFactory from '../../../../modules/beverage/usecases/list-beverages-by-category/list-beverage-by-category.usecase.factory'
 import { imageUpload } from '../middlewares/image-upload.middleware'
 import { sanitizeBeverage } from '../middlewares/sanitization/sanitize-beverage.middleware'
+import { validateBeveragePost } from '../middlewares/validations/beverage/validate-beverage-post.middleware'
 
 export default class BeveragesRouter {
   private _router = Router()
@@ -21,8 +22,9 @@ export default class BeveragesRouter {
   private routes(): void {
     this.router.post(
       '/', 
-      imageUpload, 
       sanitizeBeverage,
+      validateBeveragePost,
+      imageUpload, 
       async (req: Request, res: Response) => {
         try {
           const createBeverageUsecase = CreateBeverageUsecaseFactory.create()
