@@ -1,4 +1,5 @@
 import cors from 'cors'
+import path from 'path'
 import helmet from 'helmet'
 import express from 'express'
 import compression from 'compression'
@@ -23,6 +24,11 @@ export default class App {
 
     this.middlewares()
     this.routes()
+
+    this.app.use(
+      '/images', 
+      express.static(path.join(__dirname, '../../images'))
+    )
   }
 
   private routes(): void {

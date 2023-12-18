@@ -4,3 +4,4 @@ dist/
 .env
 database/
 .vscode/
+src/infra/images
