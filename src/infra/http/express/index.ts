@@ -3,14 +3,17 @@ import helmet from 'helmet'
 import express from 'express'
 import compression from 'compression'
 import UsersRouter from './routes/users.router'
+import CategoriesRouter from './routes/categories.router'
 
 export default class App {
   public app
   public usersRouter: UsersRouter
+  public categoriesRouter: CategoriesRouter
 
   constructor() {
     this.app = express()
     this.usersRouter = new UsersRouter()
+    this.categoriesRouter = new CategoriesRouter()
 
     this.middlewares()
     this.routes()
@@ -18,6 +21,7 @@ export default class App {
 
   private routes(): void {
     this.app.use('/users', this.usersRouter.router)
+    this.app.use('/categories', this.categoriesRouter.router)
   }
 
   private middlewares(): void {
