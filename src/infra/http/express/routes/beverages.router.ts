@@ -19,10 +19,16 @@ export default class BeveragesRouter {
   private routes(): void {
     this.router.post('/', async (req: Request, res: Response) => {
       try {
+        const input = {
+          ...req.body,
+          image: req.files['image']
+        }
+
         const createBeverageUsecase = CreateBeverageUsecaseFactory.create()
-        const {status, data} = await createBeverageUsecase.execute(req.body)
+        const {status, data} = await createBeverageUsecase.execute(input)
         res.status(status).send(data)
-      } catch {
+      } catch (err) {
+        console.error(err)
         res.status(500).send()
       }
     })
