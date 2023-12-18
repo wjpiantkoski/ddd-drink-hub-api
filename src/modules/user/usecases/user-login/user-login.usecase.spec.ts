@@ -45,12 +45,12 @@ describe('UserLoginUsecase', () => {
       new GenerateUserTokenService()
     )
 
-    const result = await usecase.execute({
+    const {data} = await usecase.execute({
       password,
       email: userData.email,
     })
 
-    expect(result.token).toBeDefined()
+    expect(data.token).toBeDefined()
   })
 
   it('should not login user when wrong email', async () => {
@@ -60,10 +60,12 @@ describe('UserLoginUsecase', () => {
       new GenerateUserTokenService()
     )
 
-    await expect(usecase.execute({
+    const {status} = await usecase.execute({
       password: 'any',
       email: 'any@email.com'
-    })).rejects.toThrow('Invalid credentials')
+    })
+
+    expect(status).toEqual(401)
   })
 
   it('should not login user with wrong password', async () => {
@@ -82,9 +84,11 @@ describe('UserLoginUsecase', () => {
       new GenerateUserTokenService()
     )
 
-    await expect(usecase.execute({
+    const {status} = await usecase.execute({
       password: 'any',
       email: 'any@email.com'
-    })).rejects.toThrow('Invalid credentials')
+    })
+
+    expect(status).toEqual(401)
   })
 })
