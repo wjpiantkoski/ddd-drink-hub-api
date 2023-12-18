@@ -3,6 +3,7 @@ import UserRegisterUsecaseFactory from '../../../../modules/user/usecases/user-r
 import UserLoginUsecaseFactory from '../../../../modules/user/usecases/user-login/user-login.usecase.factory'
 import { sanitizeUser } from '../middlewares/sanitization/sanitize-user.middleware'
 import { validateUserSignup } from '../middlewares/validations/user/validate-user-signup.middleware'
+import { validateUserSignin } from '../middlewares/validations/user/validate-user-signin.middleware'
 
 export default class UsersRouter {
   private _router = Router()
@@ -34,6 +35,7 @@ export default class UsersRouter {
     this.router.post(
       '/sign-in', 
       sanitizeUser, 
+      validateUserSignin,
       async (req: Request, res: Response) => {
         try {
           const userLoginUsecase = UserLoginUsecaseFactory.create()
