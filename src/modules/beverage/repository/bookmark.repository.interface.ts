@@ -4,4 +4,5 @@ export default interface IBookmarkRepository {
   create(bookmark: Bookmark): Promise<void>
   findAllByUserId(userId: string): Promise<Bookmark[]>
   deleteById(id: string): Promise<void>
+  exists(userId: string, beverageId: string): Promise<boolean>
 }

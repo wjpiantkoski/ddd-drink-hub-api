@@ -7,6 +7,14 @@ import CategoryModel from "../category/category.model";
 import BookmarkModel from "./bookmark.model";
 
 export default class BookmarkRepository implements IBookmarkRepository {
+  async exists(userId: string, beverageId: string): Promise<boolean> {
+    const count = await BookmarkModel.count({
+      where: {userId, beverageId}
+    })
+
+    return count > 0
+  }
+
   async create(bookmark: Bookmark): Promise<void> {
     await BookmarkModel.create({
       id: bookmark.id,

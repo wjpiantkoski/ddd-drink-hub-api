@@ -103,4 +103,37 @@ describe('BookmarkRepository', () => {
 
     expect(result).toBeNull()
   })
+
+  it('should return true if bookmark exists', async () => {
+    const categoryRepository = new CategoryRepository()
+    const category = new Category('Category Name')
+
+    await categoryRepository.create(category)
+
+    const beverageRepository = new BeverageRepository()
+    const beverage = new Beverage({
+      category,
+      name: 'Beverage',
+      userId: uuidv4(),
+      description: 'Description'
+    })
+
+    await beverageRepository.create(beverage)
+
+    const bookmark = new Bookmark(beverage.userId, beverage)
+    const repository = new BookmarkRepository()
+
+    await repository.create(bookmark)
+
+    const exists = await repository.exists(bookmark.userId, bookmark.beverage.id)
+
+    expect(exists).toEqual(true)
+  })
+
+  it('should return false if bookmark doesnt exists', async () => {
+    const repository = new BookmarkRepository()
+    const exists = await repository.exists('123', 'abc')
+
+    expect(exists).toEqual(false)
+  })
 })
