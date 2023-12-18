@@ -1,26 +1,13 @@
 import { Sequelize } from "sequelize-typescript"
 import CategoryModel from "../../../../infra/database/sequelize/category/category.model"
 import PopulateCategoriesServiceFactory from "./populate-categories.service.factory"
-import BeverageModel from "../../../../infra/database/sequelize/beverage/beverage.model"
-import BookmarkModel from "../../../../infra/database/sequelize/bookmark/bookmark.model"
+import setupSequelize from "../../../../tests/helpers/setup-sequelize"
 
 describe('PopulateCategoriesService', () => {
   let sequelize: Sequelize
 
   beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: ':memory:',
-      logging: false
-    })
-
-    await sequelize.addModels([ 
-      CategoryModel,
-      BeverageModel,
-      BookmarkModel
-    ])
-    
-    await sequelize.sync({force: true})
+    sequelize = await setupSequelize()
   })
 
   afterEach(async () => {

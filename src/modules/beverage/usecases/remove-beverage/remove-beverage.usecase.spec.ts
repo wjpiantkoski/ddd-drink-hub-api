@@ -5,26 +5,13 @@ import BeverageModel from "../../../../infra/database/sequelize/beverage/beverag
 import Category from "../../domain/category/category.entity"
 import {v4 as uuidv4} from 'uuid'
 import RemoveBeverageUsecaseFactory from "./remove-beverage.usecase.factory"
-import BookmarkModel from "../../../../infra/database/sequelize/bookmark/bookmark.model"
+import setupSequelize from "../../../../tests/helpers/setup-sequelize"
 
 describe('RemoveBeverageUsecaase', () => {
   let sequelize: Sequelize
 
   beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: ':memory:',
-      logging: false
-    })
-
-    await sequelize.addModels([ 
-      UserModel,
-      CategoryModel,
-      BeverageModel,
-      BookmarkModel
-    ])
-
-    await sequelize.sync({force: true})
+    sequelize = await setupSequelize()
   })
 
   afterEach(async () => {

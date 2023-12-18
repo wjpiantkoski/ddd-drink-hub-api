@@ -1,31 +1,16 @@
 import { Sequelize } from "sequelize-typescript"
-import { UserModel } from "../../../../infra/database/sequelize/user/user.model"
 import CategoryModel from "../../../../infra/database/sequelize/category/category.model"
 import BeverageModel from "../../../../infra/database/sequelize/beverage/beverage.model"
 import Category from "../../domain/category/category.entity"
 import {v4 as uuidv4} from 'uuid' 
-import CreateBeverageUsecaseFactory from "../create-beverage/create-beverage.usecase.factory"
 import UpdateBeverageUsecaseFactory from "./update-beverage.usecase.factory"
-import BookmarkModel from "../../../../infra/database/sequelize/bookmark/bookmark.model"
+import setupSequelize from "../../../../tests/helpers/setup-sequelize"
 
 describe('UpdateBeverageUsecase', () => {
   let sequelize: Sequelize
 
   beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: ':memory:',
-      logging: false
-    })
-
-    await sequelize.addModels([ 
-      UserModel,
-      CategoryModel,
-      BeverageModel,
-      BookmarkModel
-    ])
-
-    await sequelize.sync({force: true})
+    sequelize = await setupSequelize()
   })
 
   afterEach(async () => {

@@ -1,7 +1,4 @@
 import { Sequelize } from "sequelize-typescript"
-import { UserModel } from "../user/user.model"
-import CategoryModel from "../category/category.model"
-import BeverageModel from "../beverage/beverage.model"
 import BookmarkModel from "./bookmark.model"
 import Category from "../../../../modules/beverage/domain/category/category.entity"
 import CategoryRepository from "../category/category.repository"
@@ -10,25 +7,13 @@ import Beverage from "../../../../modules/beverage/domain/beverage/beverage.enti
 import {v4 as uuidv4} from 'uuid' 
 import Bookmark from "../../../../modules/beverage/domain/bookmark/bookmark.entity"
 import BookmarkRepository from "./bookmark.repository"
+import setupSequelize from "../../../../tests/helpers/setup-sequelize"
 
 describe('BookmarkRepository', () => {
   let sequelize: Sequelize
 
   beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: ':memory:',
-      logging: false
-    })
-
-    await sequelize.addModels([ 
-      UserModel,
-      CategoryModel,
-      BeverageModel,
-      BookmarkModel
-    ])
-
-    await sequelize.sync({force: true})
+    sequelize = await setupSequelize()
   })
 
   afterEach(async () => {

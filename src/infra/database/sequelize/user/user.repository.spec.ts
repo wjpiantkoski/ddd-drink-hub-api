@@ -3,19 +3,13 @@ import { UserModel } from "./user.model"
 import UserRepository from "./user.repository"
 import User from "../../../../modules/user/domain/user.entity"
 import {v4 as uuidv4} from 'uuid'
+import setupSequelize from "../../../../tests/helpers/setup-sequelize"
 
 describe('UserRepository', () => {
   let sequelize: Sequelize
 
   beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: ':memory:',
-      logging: false
-    })
-
-    await sequelize.addModels([ UserModel ])
-    await sequelize.sync({force: true})
+    sequelize = await setupSequelize()
   })
 
   afterEach(async () => {
