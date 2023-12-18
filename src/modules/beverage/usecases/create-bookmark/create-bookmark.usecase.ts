@@ -43,6 +43,11 @@ export default class CreateBookmarkUsecase implements IUsecase {
       const bookmark = new Bookmark(input.userId, beverage)
 
       await this.bookmarkRepository.create(bookmark)
+
+      return {
+        status: 200,
+        data: null
+      }
     } catch {
       return {
         status: 422,

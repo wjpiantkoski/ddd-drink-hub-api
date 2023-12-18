@@ -5,18 +5,21 @@ import compression from 'compression'
 import UsersRouter from './routes/users.router'
 import CategoriesRouter from './routes/categories.router'
 import BeveragesRouter from './routes/beverages.router'
+import BookmarksRouter from './routes/bookmarks.router'
 
 export default class App {
   public app
   public usersRouter: UsersRouter
   public categoriesRouter: CategoriesRouter
   public beveragesRouter: BeveragesRouter
+  public bookmarksRouter: BookmarksRouter
 
   constructor() {
     this.app = express()
     this.usersRouter = new UsersRouter()
     this.categoriesRouter = new CategoriesRouter()
     this.beveragesRouter = new BeveragesRouter()
+    this.bookmarksRouter = new BookmarksRouter()
 
     this.middlewares()
     this.routes()
@@ -26,6 +29,7 @@ export default class App {
     this.app.use('/users', this.usersRouter.router)
     this.app.use('/categories', this.categoriesRouter.router)
     this.app.use('/beverages', this.beveragesRouter.router)
+    this.app.use('/bookmarks', this.bookmarksRouter.router)
   }
 
   private middlewares(): void {
