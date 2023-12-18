@@ -9,6 +9,8 @@ import CategoriesRouter from './routes/categories.router'
 import BeveragesRouter from './routes/beverages.router'
 import BookmarksRouter from './routes/bookmarks.router'
 import { verifyToken } from './middlewares/verify-token.middleware'
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('../../swagger/swagger-output.json')
 
 export default class App {
   public app
@@ -38,6 +40,7 @@ export default class App {
     this.app.use('/categories', verifyToken, this.categoriesRouter.router)
     this.app.use('/beverages', verifyToken, this.beveragesRouter.router)
     this.app.use('/bookmarks', verifyToken, this.bookmarksRouter.router)
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
   }
 
   private middlewares(): void {
