@@ -10,6 +10,7 @@ export type BeverageProps = {
   userId: string
   category: Category
   description: string
+  image: string
 }
 
 export default class Beverage {
@@ -19,6 +20,7 @@ export default class Beverage {
   private _description: string
   private _category: Category
   private _userId: string;
+  private _image: string;
 
   constructor(props: BeverageProps) {
     this._name = props.name
@@ -26,6 +28,7 @@ export default class Beverage {
     this._category = props.category
     this._description = props.description
     this._userId = props.userId
+    this._image = props.image
 
     this.validate()
   }
@@ -69,6 +72,14 @@ export default class Beverage {
     this._userId = userId
   }
 
+  get image(): string {
+    return this._image
+  }
+
+  set image(image: string) {
+    this._image = image
+  }
+
   private validate() {
     if (!this._name) {
       throw new RequiredPropertyError('name')
@@ -92,6 +103,10 @@ export default class Beverage {
 
     if (!validator.isUUID(this._userId)) {
       throw new InvalidPropertyError('userId')
+    }
+
+    if (!this._image) {
+      throw new RequiredPropertyError('image')
     }
   }
 

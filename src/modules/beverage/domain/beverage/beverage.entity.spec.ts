@@ -11,7 +11,8 @@ describe('Beverage', () => {
     category,
     name: 'Test',
     description: 'Description',
-    userId: uuidv4()
+    userId: uuidv4(),
+    image: `${uuidv4()}.png`
   }
 
   it('should create beverage', () => {
