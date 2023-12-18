@@ -8,6 +8,7 @@ import UsersRouter from './routes/users.router'
 import CategoriesRouter from './routes/categories.router'
 import BeveragesRouter from './routes/beverages.router'
 import BookmarksRouter from './routes/bookmarks.router'
+import { verifyToken } from './middlewares/verify-token.middleware'
 
 export default class App {
   public app
@@ -34,9 +35,9 @@ export default class App {
 
   private routes(): void {
     this.app.use('/users', this.usersRouter.router)
-    this.app.use('/categories', this.categoriesRouter.router)
-    this.app.use('/beverages', this.beveragesRouter.router)
-    this.app.use('/bookmarks', this.bookmarksRouter.router)
+    this.app.use('/categories', verifyToken, this.categoriesRouter.router)
+    this.app.use('/beverages', verifyToken, this.beveragesRouter.router)
+    this.app.use('/bookmarks', verifyToken, this.bookmarksRouter.router)
   }
 
   private middlewares(): void {
