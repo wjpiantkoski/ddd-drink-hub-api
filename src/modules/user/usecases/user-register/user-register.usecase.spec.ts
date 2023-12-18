@@ -29,14 +29,14 @@ describe('UserRegisterUsecase', () => {
 
     const usecase = UserRegisterUsecaseFactory.create()
 
-    const result = await usecase.execute(input)
+    const {data} = await usecase.execute(input)
 
-    expect(result.id).toBeDefined()
-    expect(result.name).toEqual(input.name)
-    expect(result.email).toEqual(input.email)
+    expect(data.id).toBeDefined()
+    expect(data.name).toEqual(input.name)
+    expect(data.email).toEqual(input.email)
   })
 
-  it('should not register duplicated user', async () => {
+  it('should not register user with invalid data', async () => {
     const input = {
       name: 'Name',
       email: 'any@email.com',
@@ -47,10 +47,21 @@ describe('UserRegisterUsecase', () => {
 
     await usecase.execute(input)
     
-    try {
-      await usecase.execute(input)
-    } catch (err) {
-      expect(err).toBeInstanceOf(Error)
+    const {status} = await usecase.execute(input)
+
+    expect(status).toEqual(400)
+  })
+
+  it('should not register duplicated user', async () => {
+    const input = {
+      name: 'Name',
+      email: 'anyemail.com',
+      password: 'any-password'
     }
+
+    const usecase = UserRegisterUsecaseFactory.create()
+    const {status} = await usecase.execute(input)
+
+    expect(status).toEqual(422)
   })
 })
