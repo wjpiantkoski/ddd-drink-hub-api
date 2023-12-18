@@ -52,7 +52,7 @@ export default class BeveragesRouter {
       }
     })
 
-    this.router.patch('/:id', async (req: Request, res: Response) => {
+    this.router.patch('/:id', imageUpload, async (req: Request, res: Response) => {
       try {
         const updateBeverageUsecase = UpdateBeverageUsecaseFactory.create()
         

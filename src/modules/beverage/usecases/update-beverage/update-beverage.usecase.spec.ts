@@ -105,7 +105,8 @@ describe('UpdateBeverageUsecase', () => {
     const beverageData = {
       name: 'Another name',
       description: 'Another description',
-      categoryId: '123'
+      categoryId: '123',
+      image: `${uuidv4()}.png`
     }
 
     const {status} = await usecase.execute({
