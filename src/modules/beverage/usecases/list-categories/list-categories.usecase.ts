@@ -8,7 +8,14 @@ export default class ListCategoriesUsecase implements IUsecase {
 
   async execute(): Promise<UsecaseResponse> {
     try {
-      const categories = await this.categoryRepository.findAll()
+      const results = await this.categoryRepository.findAll()
+
+      const categories = results.map(item => {
+        return {
+          id: item.id,
+          name: item.name
+        }
+      })
 
       return {
         status: 200,
