@@ -1,4 +1,4 @@
-import { BelongsTo, Column, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript"
+import { AllowNull, BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table, Unique } from "sequelize-typescript"
 import CategoryModel from "../category/category.model"
 import { UserModel } from "../user/user.model"
 import Category from "../../../../modules/beverage/domain/category/category.entity"
@@ -14,10 +14,9 @@ export default class BeverageModel extends Model {
   @Column({ allowNull: false })
   declare id: string
 
-  @Column({
-    allowNull: false,
-    unique: true
-  })
+  @AllowNull(false)
+  @Unique({ name: 'bev_name_unique', msg: 'beverage name should be unique' })
+  @Column({ type: DataType.STRING(100) })
   declare name: string
 
   @Column({ allowNull: false })
