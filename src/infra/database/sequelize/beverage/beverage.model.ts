@@ -22,6 +22,9 @@ export default class BeverageModel extends Model {
   @Column({ allowNull: false })
   declare description: string
 
+  @Column({ allowNull: false })
+  declare image: string
+
   @ForeignKey(() => CategoryModel)
   @Column({ allowNull: false })
   declare categoryId: string
