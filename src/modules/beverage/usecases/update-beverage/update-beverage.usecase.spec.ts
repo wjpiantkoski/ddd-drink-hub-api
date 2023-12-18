@@ -48,7 +48,8 @@ describe('UpdateBeverageUsecase', () => {
     const beverageData = {
       name: 'Another name',
       description: 'Another description',
-      categoryId: category2.id
+      categoryId: category2.id,
+      image: `${uuidv4()}.png`
     }
 
     await usecase.execute({
@@ -74,7 +75,8 @@ describe('UpdateBeverageUsecase', () => {
       beverage: {
         name: 'Test',
         categoryId: 'category-id',
-        description: 'Description'
+        description: 'Description',
+        image: `${uuidv4()}.png`
       }
     })
 
