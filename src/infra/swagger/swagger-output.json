@@ -1,226 +1,369 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "title": "Drink Hub API",
     "description": "Drink Hub API documentation",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": [
-    "http"
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "local"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "UserSignupRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserSigninRequest": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "BeveragePost": {
+        "type": "object",
+        "required": [
+          "name",
+          "image",
+          "userId",
+          "description",
+          "categoryId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "image": {
+            "in": "formData",
+            "type": "file"
+          }
+        }
+      },
+      "BeveragePatch": {
+        "type": "object",
+        "required": [
+          "name",
+          "image",
+          "description",
+          "categoryId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "image": {
+            "in": "formData",
+            "type": "file"
+          }
+        }
+      },
+      "BookmarkPost": {
+        "type": "object",
+        "required": [
+          "userId",
+          "beverageId"
+        ],
+        "properties": {
+          "beverageId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "Authorization": []
+    }
   ],
   "paths": {
-    "/": {
+    "/users/sign-up": {
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "example": "any"
-                },
-                "beverageId": {
-                  "example": "any"
+        "tags": ["Users"],
+        "summary": "Sign up user",
+        "description": "Create a credentials to get access authorized",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSignupRequest"
+              },
+              "examples": {
+                "body": {
+                  "value": {
+                    "name": "Any Name",
+                    "email": "email@email.com",
+                    "password": "1234567"
+                  }
                 }
               }
             }
           }
-        ],
+        },
         "responses": {
-          "422": {
-            "description": "Unprocessable Entity"
+          "201": {
+            "description": "OK"
           },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "get": {
-        "description": "",
-        "responses": {
-          "500": {
-            "description": "Internal Server Error"
+          "422": { 
+            "description": "Invalid data sent"
           }
         }
       }
     },
-    "/categories/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
+    "/users/sign-in": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Sign in user",
+        "description": "Get authotization token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSigninRequest"
+              },
+              "examples": {
+                "body": {
+                  "value": {
+                    "email": "email@email.com",
+                    "password": "1234567"
+                  }
+                }
+              }
+            }
           }
-        ],
+        },
         "responses": {
-          "500": {
-            "description": "Internal Server Error"
+          "200": {
+            "description": "OK"
+          },
+          "401": { 
+            "description": "Invalid data sent"
           }
         }
       }
     },
-    "/{id}": {
+    "/categories": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "tags": ["Categories"],
+        "summary": "List categories",
+        "description": "Get all registered categories",
         "responses": {
-          "500": {
-            "description": "Internal Server Error"
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
-      },
+      }
+    },
+    "/beverages": {
+      "post": {
+        "tags": ["Beverages"],
+        "summary": "Create a beverage",
+        "consumes": "multipart/form-data",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BeveragePost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": { 
+            "description": "Invalid data sent"
+          },
+          "422": { 
+            "description": "Invalid data sent"
+          }
+        }
+      }
+    },
+    "/beverages/{id}": {
       "patch": {
-        "description": "",
+        "tags": ["Beverages"],
+        "summary": "Update a beverage",
+        "consumes": "multipart/form-data",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
+            "description": "Beverage id",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "categoryId": {
-                  "example": "any"
-                },
-                "image": {
-                  "example": "any"
-                }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BeveragePatch"
               }
             }
           }
-        ],
+        },
         "responses": {
-          "422": {
-            "description": "Unprocessable Entity"
+          "200": {
+            "description": "OK"
           },
-          "500": {
-            "description": "Internal Server Error"
+          "400": { 
+            "description": "Invalid data sent"
+          },
+          "422": { 
+            "description": "Invalid data sent"
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Beverages"],
+        "summary": "Delete a beverage",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
+            "description": "Beverage id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error"
+          "204": {
+            "description": "OK"
           }
         }
       }
     },
-    "/users/{id}": {
+    "/beverages/categories/{categoryId}": {
       "get": {
-        "description": "",
+        "tags": ["Beverages"],
+        "summary": "List beverages from a category",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/bookmarks": {
+      "post": {
+        "tags": ["Bookmarks"],
+        "summary": "Create a bookmark",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookmarkPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": { 
+            "description": "Invalid data sent"
+          },
+          "422": { 
+            "description": "Invalid data sent"
+          }
+        }
+      }
+    },
+    "/bookmarks/{id}": {
+      "delete": {
+        "tags": ["Bookmarks"],
+        "summary": "Delete a bookmark",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
+            "description": "Bookmark id",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "500": {
-            "description": "Internal Server Error"
+          "204": {
+            "description": "OK"
           }
         }
       }
     },
-    "/sign-up": {
-      "post": {
-        "description": "",
+    "/bookmarks/users/{userId}": {
+      "get": {
+        "tags": ["Bookmarks"],
+        "summary": "List bookmarks from an user",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "userId",
+            "in": "query",
+            "description": "User id",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
-          "422": {
-            "description": "Unprocessable Entity"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/sign-in": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "200": {
+            "description": "OK"
           }
         }
       }
