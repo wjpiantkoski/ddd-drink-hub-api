@@ -5,6 +5,7 @@ import ShowBeverageUsecaseFactory from '../../../../modules/beverage/usecases/sh
 import RemoveBeverageUsecaseFactory from '../../../../modules/beverage/usecases/remove-beverage/remove-beverage.usecase.factory'
 import ListBeverageByCategoryUsecaseFactory from '../../../../modules/beverage/usecases/list-beverages-by-category/list-beverage-by-category.usecase.factory'
 import { imageUpload } from '../middlewares/image-upload.middleware'
+import { sanitizeBeverage } from '../middlewares/sanitization/sanitize-beverage.middleware'
 
 export default class BeveragesRouter {
   private _router = Router()
@@ -18,15 +19,20 @@ export default class BeveragesRouter {
   }
 
   private routes(): void {
-    this.router.post('/', imageUpload, async (req: Request, res: Response) => {
-      try {
-        const createBeverageUsecase = CreateBeverageUsecaseFactory.create()
-        const {status, data} = await createBeverageUsecase.execute(req.body)
-        res.status(status).send(data)
-      } catch {
-        res.status(500).send()
+    this.router.post(
+      '/', 
+      imageUpload, 
+      sanitizeBeverage,
+      async (req: Request, res: Response) => {
+        try {
+          const createBeverageUsecase = CreateBeverageUsecaseFactory.create()
+          const {status, data} = await createBeverageUsecase.execute(req.body)
+          res.status(status).send(data)
+        } catch {
+          res.status(500).send()
+        }
       }
-    })
+    )
 
     this.router.get('/categories/:id', async (req: Request, res: Response) => {
       try {
@@ -52,20 +58,25 @@ export default class BeveragesRouter {
       }
     })
 
-    this.router.patch('/:id', imageUpload, async (req: Request, res: Response) => {
-      try {
-        const updateBeverageUsecase = UpdateBeverageUsecaseFactory.create()
-        
-        const {status, data} = await updateBeverageUsecase.execute({
-          beverageId: req.params.id,
-          beverage: req.body
-        })
+    this.router.patch(
+      '/:id', 
+      imageUpload,
+      sanitizeBeverage, 
+      async (req: Request, res: Response) => {
+        try {
+          const updateBeverageUsecase = UpdateBeverageUsecaseFactory.create()
+          
+          const {status, data} = await updateBeverageUsecase.execute({
+            beverageId: req.params.id,
+            beverage: req.body
+          })
 
-        res.status(status).send(data)
-      } catch {
-        res.status(500).send()
+          res.status(status).send(data)
+        } catch {
+          res.status(500).send()
+        }
       }
-    })
+    )
 
     this.router.delete('/:id', async (req: Request, res: Response) => {
       try {
