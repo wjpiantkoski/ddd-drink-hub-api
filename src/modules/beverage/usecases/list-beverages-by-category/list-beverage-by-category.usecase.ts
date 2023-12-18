@@ -1,4 +1,4 @@
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import Beverage from "../../domain/beverage/beverage.entity";
 import IBeverageRepository from "../../repository/beverage.repository.interface";
 

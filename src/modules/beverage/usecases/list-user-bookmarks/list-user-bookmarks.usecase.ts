@@ -1,4 +1,4 @@
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import Bookmark from "../../domain/bookmark/bookmark.entity";
 import IBookmarkRepository from "../../repository/bookmark.repository.interface";
 

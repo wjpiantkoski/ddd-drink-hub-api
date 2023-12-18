@@ -1,6 +1,6 @@
 import IService from "../../../../@shared/domain/service/service.interface";
-import UsecaseResponse from "../../../../@shared/domain/usercase/usecase-response";
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import User from "../../domain/user.entity";
 import IUserRepository from "../../repository/user.repository.interface";
 

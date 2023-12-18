@@ -1,6 +1,6 @@
 import IService from "../../../../@shared/domain/service/service.interface";
-import UsecaseResponse from "../../../../@shared/domain/usercase/usecase-response";
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import IUserRepository from "../../repository/user.repository.interface";
 
 export interface UserLoginUsecaseInput {

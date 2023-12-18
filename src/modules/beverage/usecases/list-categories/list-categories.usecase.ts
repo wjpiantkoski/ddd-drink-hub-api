@@ -1,5 +1,5 @@
-import UsecaseResponse from "../../../../@shared/domain/usercase/usecase-response";
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import ICategoryRepository from "../../repository/category.repository.interface";
 
 export default class ListCategoriesUsecase implements IUsecase {

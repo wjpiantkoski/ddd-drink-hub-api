@@ -1,4 +1,4 @@
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import IBeverageRepository from "../../repository/beverage.repository.interface";
 import ICategoryRepository from "../../repository/category.repository.interface";
 
