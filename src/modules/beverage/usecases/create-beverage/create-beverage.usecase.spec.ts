@@ -52,7 +52,8 @@ describe('CreateBeverageUsecase', () => {
     }
 
     const usecase = CreateBeverageUsecaseFactory.create()
+    const {status} = await usecase.execute(beverage)
 
-    await expect(usecase.execute(beverage)).rejects.toThrow('Category not found')
+    expect(status).toEqual(400)
   })
 })

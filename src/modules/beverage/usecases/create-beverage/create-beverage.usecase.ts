@@ -1,3 +1,4 @@
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
 import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import Beverage from "../../domain/beverage/beverage.entity";
 import IBeverageRepository from "../../repository/beverage.repository.interface";
@@ -17,11 +18,16 @@ export default class CreateBeverageUsecase implements IUsecase {
     private categoryRepository: ICategoryRepository
   ) {}
 
-  async execute(input: CreateBeverageUsecaseInput): Promise<void> {
+  async execute(input: CreateBeverageUsecaseInput): Promise<UsecaseResponse> {
     const category = await this.categoryRepository.findById(input.categoryId)
 
     if (!category) {
-      throw new Error('Category not found')
+      return {
+        status: 400,
+        data: { 
+          message: 'Invalid category'
+        }
+      }
     }
 
     const beverage = new Beverage({
@@ -31,6 +37,18 @@ export default class CreateBeverageUsecase implements IUsecase {
       description: input.description
     })
 
-    await this.beverageRepository.create(beverage)
+    try {
+      await this.beverageRepository.create(beverage)
+
+      return {
+        data: null,
+        status: 201
+      }
+    } catch {
+      return {
+        data: null,
+        status: 400
+      }
+    }
   }
 }
