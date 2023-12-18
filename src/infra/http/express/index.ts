@@ -2,14 +2,22 @@ import cors from 'cors'
 import helmet from 'helmet'
 import express from 'express'
 import compression from 'compression'
+import UsersRouter from './routes/users.router'
 
 export default class App {
   public app
+  public usersRouter: UsersRouter
 
   constructor() {
     this.app = express()
+    this.usersRouter = new UsersRouter()
 
     this.middlewares()
+    this.routes()
+  }
+
+  private routes(): void {
+    this.app.use('/users', this.usersRouter.router)
   }
 
   private middlewares(): void {
