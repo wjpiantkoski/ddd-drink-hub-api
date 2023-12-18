@@ -5,6 +5,7 @@ import BeverageModel from "../../../../infra/database/sequelize/beverage/beverag
 import Category from "../../domain/category/category.entity"
 import {v4 as uuidv4} from 'uuid' 
 import ListBeverageByCategoryUsecaseFactory from "./list-beverage-by-category.usecase.factory"
+import BookmarkModel from "../../../../infra/database/sequelize/bookmark/bookmark.model"
 
 describe('ListBeverageByCategoryUsecase', () => {
   let sequelize: Sequelize
@@ -19,7 +20,8 @@ describe('ListBeverageByCategoryUsecase', () => {
     await sequelize.addModels([ 
       UserModel,
       CategoryModel,
-      BeverageModel
+      BeverageModel,
+      BookmarkModel
     ])
 
     await sequelize.sync({force: true})

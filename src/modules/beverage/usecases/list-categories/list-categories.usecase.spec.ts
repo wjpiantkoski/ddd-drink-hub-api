@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize-typescript"
 import CategoryModel from "../../../../infra/database/sequelize/category/category.model"
 import ListCategoriesUsecaseFactory from "./list-categories.usecase.factory"
 import BeverageModel from "../../../../infra/database/sequelize/beverage/beverage.model"
+import BookmarkModel from "../../../../infra/database/sequelize/bookmark/bookmark.model"
 
 describe('ListCategoriesUsecase', () => {
   let sequelize: Sequelize
@@ -15,7 +16,8 @@ describe('ListCategoriesUsecase', () => {
 
     await sequelize.addModels([ 
       CategoryModel,
-      BeverageModel
+      BeverageModel,
+      BookmarkModel
     ])
 
     await sequelize.sync({force: true})

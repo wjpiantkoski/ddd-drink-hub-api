@@ -3,6 +3,7 @@ import CategoryModel from "./category.model"
 import CategoryRepository from "./category.repository"
 import Category from "../../../../modules/beverage/domain/category/category.entity"
 import BeverageModel from "../beverage/beverage.model"
+import BookmarkModel from "../bookmark/bookmark.model"
 
 describe('CategoryRepository', () => {
   let sequelize: Sequelize
@@ -16,7 +17,8 @@ describe('CategoryRepository', () => {
 
     await sequelize.addModels([ 
       CategoryModel,
-      BeverageModel
+      BeverageModel,
+      BookmarkModel
     ])
 
     await sequelize.sync({force: true})
