@@ -9,7 +9,7 @@ import CategoriesRouter from './routes/categories.router'
 import BeveragesRouter from './routes/beverages.router'
 import BookmarksRouter from './routes/bookmarks.router'
 import { verifyToken } from './middlewares/verify-token.middleware'
-const swaggerUi = require('swagger-ui-express')
+import swaggerUi from 'swagger-ui-express'
 const swaggerFile = require('../../swagger/swagger-output.json')
 
 export default class App {
