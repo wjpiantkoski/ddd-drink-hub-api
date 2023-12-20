@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: drink-hub-api:prod
+    container_name: drink-hub-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file: .env
+    environment:
+        SERVER_PORT: $SERVER_PORT
+        MYSQL_ROOT_PASSWORD: $DATABASE_PASSWORD
+        MYSQL_DATABASE: $DATABASE_NAME
+        MYSQL_USER: $DATABASE_USER
+        MYSQL_PASSWORD: $DATABASE_PASSWORD
+        MYSQL_HOST: mysql
+    ports:
+      - '3000:3000'
+    networks:
+      - drink-hub
+
+  mysql:
+    image: mysql:8.0.35-bullseye
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+    env_file:
+      - .env
+    environment:
+        MYSQL_ROOT_PASSWORD: $DATABASE_PASSWORD
+        MYSQL_DATABASE: $DATABASE_NAME
+        MYSQL_USER: $DATABASE_USER
+        MYSQL_PASSWORD: $DATABASE_PASSWORD
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./database/prod:/var/lib/mysql
+    networks:
+      - drink-hub
+
+networks:
+  drink-hub:
+    driver: bridge
