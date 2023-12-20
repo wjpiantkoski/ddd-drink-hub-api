@@ -42,11 +42,20 @@ export default class UserLoginUsecase implements IUsecase {
       }
     }
 
-    const token = this.generateUserTokenService.run(user.id)
+    const data = this.generateUserTokenService.run(user.id)
+    
+    const response = {
+      token: data.token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      }
+    }
 
     return {
       status: 200,
-      data: token
+      data: response
     }
   }
   
