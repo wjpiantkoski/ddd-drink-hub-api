@@ -14,7 +14,12 @@ export default class ListBeverageByCategoryUsecase implements IUsecase {
       return {
         id: item.id,
         name: item.name,
-        category: item.category.name
+        image: item.image,
+        userId: item.userId,
+        category: {
+          id: item.category.id,
+          name: item.category.name
+        }
       }
     })
 
