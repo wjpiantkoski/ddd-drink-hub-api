@@ -25,6 +25,8 @@ export default class ShowBeverageUsecase implements IUsecase {
       data: {
         id: beverage.id,
         name: beverage.name,
+        image: beverage.image,
+        userId: beverage.userId,
         description: beverage.description,
         category: {
           id: beverage.category.id,
