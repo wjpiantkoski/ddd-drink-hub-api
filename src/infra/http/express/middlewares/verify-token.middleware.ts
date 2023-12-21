@@ -5,8 +5,6 @@ import {JWT_SECRET} from '../../../../env'
 export const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.header('Authorization')
 
-  console.log({token})
-
   if (!token) {
     return res.sendStatus(401)
   }
