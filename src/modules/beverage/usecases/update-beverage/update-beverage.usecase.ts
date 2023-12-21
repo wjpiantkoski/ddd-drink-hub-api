@@ -56,6 +56,7 @@ export default class UpdateBeverageUsecase implements IUsecase {
     }
 
     beverage.name = input.beverage.name
+    beverage.image = input.beverage.image
     beverage.description = input.beverage.description
 
     try {
