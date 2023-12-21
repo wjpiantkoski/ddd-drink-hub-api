@@ -49,7 +49,7 @@ export default class App {
 
     this.app.use(cors({
         origin: '*',
-        methods: 'GET,PUT,POST,DELETE'
+        methods: 'GET,PUT,POST,DELETE,PATCH'
     }))
 
     this.app.use(fileupload({
