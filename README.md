@@ -45,3 +45,6 @@ docker-compose up
 ---- services: data processing services
 ---- usecases 
 ```
+
+## Database diagram
+![Database diagram](./docs/images/db-diagram.png)
