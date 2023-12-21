@@ -30,7 +30,8 @@ describe('CreateBookmarkUsecase', () => {
       category,
       name: 'Beverage',
       userId: uuidv4(),
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     })
 
     await beverageRepository.create(beverage)
@@ -59,7 +60,8 @@ describe('CreateBookmarkUsecase', () => {
       category,
       name: 'Beverage',
       userId: uuidv4(),
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     })
 
     await beverageRepository.create(beverage)
@@ -83,7 +85,8 @@ describe('CreateBookmarkUsecase', () => {
       name: 'Beverage',
       userId: uuidv4(),
       description: 'Description',
-      category: new Category('Category Name')
+      category: new Category('Category Name'),
+      image: `${uuidv4()}.png`
     })
 
     const usecase = CreateBookmarkUsecaseFactory.create()
@@ -93,6 +96,8 @@ describe('CreateBookmarkUsecase', () => {
       beverageId: beverage.id
     }
 
-    await expect(usecase.execute(bookmark)).rejects.toThrow('Beverage not found')
+    const {status} = await usecase.execute(bookmark)
+
+    expect(status).toEqual(400)
   })
 })

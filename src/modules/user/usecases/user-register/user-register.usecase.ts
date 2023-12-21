@@ -1,5 +1,6 @@
 import IService from "../../../../@shared/domain/service/service.interface";
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import User from "../../domain/user.entity";
 import IUserRepository from "../../repository/user.repository.interface";
 
@@ -22,16 +23,35 @@ export default class UserRegisterUsecase implements IUsecase {
     private hashUserPassword: IService
   ) {}
 
-  async execute(input: UserRegisterUsecaseInput): Promise<UserRegisterUsecaseOutput> {
-    const hashedPassword = await this.hashUserPassword.run(input.password)
-    const user = new User(input.name, input.email, hashedPassword)
+  async execute(input: UserRegisterUsecaseInput): Promise<UsecaseResponse> {
+    const user = await this.userRepository.findByEmail(input.email)
 
-    await this.userRepository.create(new User(input.name, input.email, hashedPassword, user.id))
+    if (!!user) {
+      return {
+        data: null,
+        status: 400,
+      }
+    }
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email
+    try {
+      const hashedPassword = await this.hashUserPassword.run(input.password)
+      const newUser = new User(input.name, input.email, hashedPassword)
+
+      await this.userRepository.create(newUser)
+
+      return {
+        status: 201,
+        data: {
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email
+        }
+      }
+    } catch {
+      return {
+        data: null,
+        status: 422
+      }
     }
   }
   

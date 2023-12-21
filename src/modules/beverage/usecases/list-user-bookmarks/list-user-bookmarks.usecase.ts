@@ -1,5 +1,5 @@
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
-import Bookmark from "../../domain/bookmark/bookmark.entity";
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import IBookmarkRepository from "../../repository/bookmark.repository.interface";
 
 export interface ListUserBookmarksUsecaseInput {
@@ -10,7 +10,27 @@ export default class ListUserBookmarksUsecase implements IUsecase {
 
   constructor(private bookmarkRepository: IBookmarkRepository) {}
 
-  execute(input: ListUserBookmarksUsecaseInput): Promise<Bookmark[]> {
-    return this.bookmarkRepository.findAllByUserId(input.userId)
+  async execute(input: ListUserBookmarksUsecaseInput): Promise<UsecaseResponse> {
+    const items = await this.bookmarkRepository.findAllByUserId(input.userId)
+
+    const bookmarks = items.map(item => {
+      return {
+        id: item.id,
+        beverage: {
+          id: item.beverage.id,
+          name: item.beverage.name,
+          category: {
+            id: item.beverage.category.id,
+            name: item.beverage.category.name
+          },
+          image: item.beverage.image
+        }
+      }
+    })
+
+    return {
+      status: 200,
+      data: bookmarks
+    }
   }
 }

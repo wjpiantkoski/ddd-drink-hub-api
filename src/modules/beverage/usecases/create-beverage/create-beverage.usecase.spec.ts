@@ -29,7 +29,8 @@ describe('CreateBeverageUsecase', () => {
       name: 'beverage',
       userId: uuidv4(),
       categoryId: category.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     }
 
     const usecase = CreateBeverageUsecaseFactory.create()
@@ -48,11 +49,13 @@ describe('CreateBeverageUsecase', () => {
       name: 'beverage',
       userId: uuidv4(),
       categoryId: category.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     }
 
     const usecase = CreateBeverageUsecaseFactory.create()
+    const {status} = await usecase.execute(beverage)
 
-    await expect(usecase.execute(beverage)).rejects.toThrow('Category not found')
+    expect(status).toEqual(400)
   })
 })

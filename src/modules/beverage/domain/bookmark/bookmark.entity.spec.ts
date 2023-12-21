@@ -12,7 +12,8 @@ describe('Bookmark', () => {
     category,
     name: 'Test',
     description: 'Description',
-    userId: uuidv4()
+    userId: uuidv4(),
+    image: `${uuidv4()}.png`
   }
 
   const beverage = new Beverage(props)
@@ -32,6 +33,17 @@ describe('Bookmark', () => {
   })
 
   it('should throw error when userId is not equal beverage userId', () => {
+    const props = {
+      id: '1',
+      category,
+      name: 'Test',
+      description: 'Description',
+      userId: uuidv4(),
+      image: `${uuidv4()}.png`
+    }
+  
+    const beverage = new Beverage(props)
+
     expect(() => {
       new Bookmark(uuidv4(), beverage, '1')
     }).toThrow(InvalidPropertyError)

@@ -22,7 +22,8 @@ export default class BeverageRepository implements IBeverageRepository {
       id: beverage.id,
       name: beverage.name,
       userId: beverage.userId,
-      description: beverage.description
+      description: beverage.description,
+      image: beverage.image
     })
   }
 
@@ -40,7 +41,8 @@ export default class BeverageRepository implements IBeverageRepository {
         id: item.id,
         name: item.name,
         userId: item.userId,
-        description: item.description
+        description: item.description,
+        image: item.image
       })
     })
   }
@@ -51,7 +53,8 @@ export default class BeverageRepository implements IBeverageRepository {
       name: beverage.name,
       userId: beverage.userId,
       categoryId: beverage.category.id,
-      description: beverage.description
+      description: beverage.description,
+      image: beverage.image
     })  
   }
 
@@ -59,7 +62,8 @@ export default class BeverageRepository implements IBeverageRepository {
     await BeverageModel.update({
       name: beverage.name,
       categoryId: beverage.category.id,
-      description: beverage.description
+      description: beverage.description,
+      image: beverage.image
     }, {
       where: { id: beverage.id }
     })

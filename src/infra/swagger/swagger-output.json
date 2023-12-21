@@ -1,0 +1,372 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Drink Hub API",
+    "description": "Drink Hub API documentation",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "local"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "UserSignupRequest": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserSigninRequest": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "BeveragePost": {
+        "type": "object",
+        "required": [
+          "name",
+          "image",
+          "userId",
+          "description",
+          "categoryId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "image": {
+            "in": "formData",
+            "type": "file"
+          }
+        }
+      },
+      "BeveragePatch": {
+        "type": "object",
+        "required": [
+          "name",
+          "image",
+          "description",
+          "categoryId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "image": {
+            "in": "formData",
+            "type": "file"
+          }
+        }
+      },
+      "BookmarkPost": {
+        "type": "object",
+        "required": [
+          "userId",
+          "beverageId"
+        ],
+        "properties": {
+          "beverageId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "Authorization": []
+    }
+  ],
+  "paths": {
+    "/users/sign-up": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Sign up user",
+        "description": "Create a credentials to get access authorized",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSignupRequest"
+              },
+              "examples": {
+                "body": {
+                  "value": {
+                    "name": "Any Name",
+                    "email": "email@email.com",
+                    "password": "1234567"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "422": { 
+            "description": "Invalid data sent"
+          }
+        }
+      }
+    },
+    "/users/sign-in": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Sign in user",
+        "description": "Get authotization token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSigninRequest"
+              },
+              "examples": {
+                "body": {
+                  "value": {
+                    "email": "email@email.com",
+                    "password": "1234567"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": { 
+            "description": "Invalid data sent"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "List categories",
+        "description": "Get all registered categories",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/beverages": {
+      "post": {
+        "tags": ["Beverages"],
+        "summary": "Create a beverage",
+        "consumes": "multipart/form-data",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BeveragePost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": { 
+            "description": "Invalid data sent"
+          },
+          "422": { 
+            "description": "Invalid data sent"
+          }
+        }
+      }
+    },
+    "/beverages/{id}": {
+      "patch": {
+        "tags": ["Beverages"],
+        "summary": "Update a beverage",
+        "consumes": "multipart/form-data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Beverage id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BeveragePatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": { 
+            "description": "Invalid data sent"
+          },
+          "422": { 
+            "description": "Invalid data sent"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Beverages"],
+        "summary": "Delete a beverage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Beverage id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/beverages/categories/{categoryId}": {
+      "get": {
+        "tags": ["Beverages"],
+        "summary": "List beverages from a category",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/bookmarks": {
+      "post": {
+        "tags": ["Bookmarks"],
+        "summary": "Create a bookmark",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookmarkPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": { 
+            "description": "Invalid data sent"
+          },
+          "422": { 
+            "description": "Invalid data sent"
+          }
+        }
+      }
+    },
+    "/bookmarks/{id}": {
+      "delete": {
+        "tags": ["Bookmarks"],
+        "summary": "Delete a bookmark",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Bookmark id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/bookmarks/users/{userId}": {
+      "get": {
+        "tags": ["Bookmarks"],
+        "summary": "List bookmarks from an user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "User id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

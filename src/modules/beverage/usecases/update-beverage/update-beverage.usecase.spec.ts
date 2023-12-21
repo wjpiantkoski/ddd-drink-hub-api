@@ -37,7 +37,8 @@ describe('UpdateBeverageUsecase', () => {
       name: 'beverage',
       userId: uuidv4(),
       categoryId: category1.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     }
 
     await BeverageModel.create(beverage)
@@ -47,7 +48,8 @@ describe('UpdateBeverageUsecase', () => {
     const beverageData = {
       name: 'Another name',
       description: 'Another description',
-      categoryId: category2.id
+      categoryId: category2.id,
+      image: `${uuidv4()}.png`
     }
 
     await usecase.execute({
@@ -68,14 +70,17 @@ describe('UpdateBeverageUsecase', () => {
   it('should not update beverage when is not found', async () => {
     const usecase = UpdateBeverageUsecaseFactory.create()
 
-    await expect(usecase.execute({
+    const {status} = await usecase.execute({
       beverageId: '123',
       beverage: {
         name: 'Test',
         categoryId: 'category-id',
-        description: 'Description'
+        description: 'Description',
+        image: `${uuidv4()}.png`
       }
-    })).rejects.toThrow('Beverage not found')
+    })
+
+    expect(status).toEqual(404)
   })
 
   it('should not update beverage when category is not found', async () => {
@@ -91,7 +96,8 @@ describe('UpdateBeverageUsecase', () => {
       name: 'beverage',
       userId: uuidv4(),
       categoryId: category.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     }
 
     await BeverageModel.create(beverage)
@@ -101,12 +107,15 @@ describe('UpdateBeverageUsecase', () => {
     const beverageData = {
       name: 'Another name',
       description: 'Another description',
-      categoryId: '123'
+      categoryId: '123',
+      image: `${uuidv4()}.png`
     }
 
-    await expect(usecase.execute({
+    const {status} = await usecase.execute({
       beverageId: beverage.id,
       beverage: beverageData
-    })).rejects.toThrow('Category not found')
+    })
+
+    expect(status).toEqual(400)
   })
 })

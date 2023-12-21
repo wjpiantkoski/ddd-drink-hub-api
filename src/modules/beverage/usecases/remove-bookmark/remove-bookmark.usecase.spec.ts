@@ -4,7 +4,6 @@ import CategoryRepository from "../../../../infra/database/sequelize/category/ca
 import Category from "../../domain/category/category.entity"
 import BeverageRepository from "../../../../infra/database/sequelize/beverage/beverage.repository"
 import Beverage from "../../domain/beverage/beverage.entity"
-import CreateBookmarkUsecaseFactory from "../create-bookmark/create-bookmark.usecase.factory"
 import {v4 as uuidv4} from 'uuid'
 import RemoveBookmarkUsecaseFactory from "./remove-bookmark.usecase.factory"
 import BookmarkRepository from "../../../../infra/database/sequelize/bookmark/bookmark.repository"
@@ -33,7 +32,8 @@ describe('RemoveBookmarkUsecase', () => {
       category,
       name: 'Beverage',
       userId: uuidv4(),
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     })
 
     await beverageRepository.create(beverage)

@@ -1,4 +1,5 @@
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import Beverage from "../../domain/beverage/beverage.entity";
 import IBeverageRepository from "../../repository/beverage.repository.interface";
 
@@ -6,8 +7,26 @@ export default class ListBeverageByCategoryUsecase implements IUsecase {
 
   constructor(private beverageRepository: IBeverageRepository) {}
 
-  execute(categoryId: string): Promise<Beverage[]> {
-    return this.beverageRepository.findByCategoryId(categoryId)
+  async execute(categoryId: string): Promise<UsecaseResponse> {
+    const items = await this.beverageRepository.findByCategoryId(categoryId)
+
+    const beverages = items.map(item => {
+      return {
+        id: item.id,
+        name: item.name,
+        image: item.image,
+        userId: item.userId,
+        category: {
+          id: item.category.id,
+          name: item.category.name
+        }
+      }
+    })
+
+    return {
+      status: 200,
+      data: beverages
+    }
   }
   
 }

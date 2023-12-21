@@ -31,7 +31,8 @@ describe('RemoveBeverageUsecaase', () => {
       name: 'beverage',
       userId: uuidv4(),
       categoryId: category.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     }
 
     await BeverageModel.create(beverage)

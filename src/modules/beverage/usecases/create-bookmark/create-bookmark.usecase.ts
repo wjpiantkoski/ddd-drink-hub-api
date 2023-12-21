@@ -1,4 +1,5 @@
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import UsecaseResponse from "../../../../@shared/domain/usecase/usecase-response";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import Bookmark from "../../domain/bookmark/bookmark.entity";
 import IBeverageRepository from "../../repository/beverage.repository.interface";
 import IBookmarkRepository from "../../repository/bookmark.repository.interface";
@@ -15,21 +16,43 @@ export default class CreateBookmarkUsecase implements IUsecase {
     private beverageRepository: IBeverageRepository
   ) {}
 
-  async execute(input: CreateBookmarkUsecaseInput): Promise<void> {
+  async execute(input: CreateBookmarkUsecaseInput): Promise<UsecaseResponse> {
     const bookmarkExists = await this.bookmarkRepository.exists(input.userId, input.beverageId)
 
     if (bookmarkExists) {
-      return
+      return {
+        status: 400,
+        data: {
+          message: 'Bookmark already saved'
+        }
+      }
     }
 
-    const beverage = await this.beverageRepository.findById(input.beverageId)
+    try {
+      const beverage = await this.beverageRepository.findById(input.beverageId)
 
-    if (!beverage) {
-      throw new Error('Beverage not found')
+      if (!beverage) {
+        return {
+          status: 400,
+          data: {
+            message: 'Invalid beverage'
+          }
+        }
+      }
+
+      const bookmark = new Bookmark(input.userId, beverage)
+
+      await this.bookmarkRepository.create(bookmark)
+
+      return {
+        status: 200,
+        data: null
+      }
+    } catch {
+      return {
+        status: 422,
+        data: null
+      }
     }
-
-    const bookmark = new Bookmark(input.userId, beverage)
-
-    await this.bookmarkRepository.create(bookmark)
   }
 }

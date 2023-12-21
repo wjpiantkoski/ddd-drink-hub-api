@@ -1,4 +1,4 @@
-import { Column, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { AllowNull, Column, DataType, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
 
 @Table({
   tableName: 'users',
@@ -13,10 +13,11 @@ export class UserModel extends Model {
   @Column({allowNull: false})
   declare name: string
 
-  @Column({allowNull: false})
+  @AllowNull(false)
+  @Unique({ name: 'user_email_unique', msg: 'user email should be unique' })
+  @Column({ type: DataType.STRING(100) })
   declare email: string
 
   @Column({allowNull: false})
   declare password: string
-
 }

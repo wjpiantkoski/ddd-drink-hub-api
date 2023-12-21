@@ -30,7 +30,8 @@ describe('BeverageRepository', () => {
       category,
       name: 'Name',
       userId: uuidv4(),
-      description: 'Testing'
+      description: 'Testing',
+      image: `${uuidv4()}.png`
     })
 
     const repository = new BeverageRepository()
@@ -60,7 +61,8 @@ describe('BeverageRepository', () => {
       id: beverageId,
       userId: uuidv4(),
       categoryId: category.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     })
 
     const repository = new BeverageRepository()
@@ -93,7 +95,8 @@ describe('BeverageRepository', () => {
       id: beverageId,
       userId: uuidv4(),
       categoryId: category.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     })
 
     const repository = new BeverageRepository()
@@ -115,7 +118,8 @@ describe('BeverageRepository', () => {
       category,
       name: 'Name',
       userId: uuidv4(),
-      description: 'Testing'
+      description: 'Testing',
+      image: `${uuidv4()}.png`
     })
 
     const repository = new BeverageRepository()
@@ -151,7 +155,8 @@ describe('BeverageRepository', () => {
       id: beverageId,
       userId: uuidv4(),
       categoryId: category.id,
-      description: 'Description'
+      description: 'Description',
+      image: `${uuidv4()}.png`
     })
 
     const repository = new BeverageRepository()

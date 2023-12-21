@@ -5,7 +5,7 @@ import InvalidParamError from "../../../../@shared/domain/errors/invalid-param.e
 
 export default class HashUserPasswordService implements IService {
   run(password: string): Promise<string> {
-    if (password.length === 0) {
+    if (!password) {
       throw new InvalidParamError('password')
     }
 

@@ -1,5 +1,5 @@
 import IService from "../../../../@shared/domain/service/service.interface";
-import IUsecase from "../../../../@shared/domain/usercase/usecase.interface";
+import IUsecase from "../../../../@shared/domain/usecase/usecase.interface";
 import bcrypt from 'bcrypt'
 
 export interface CompareUserPasswordServiceParams {
