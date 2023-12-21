@@ -34,8 +34,8 @@ export default class Bookmark {
       throw new InvalidPropertyError('userId')
     }
 
-    if(this._beverage.userId !== this._userId) {
-      throw new InvalidPropertyError('userId')
+    if (!validator.isUUID(this._beverage.id)) {
+      throw new InvalidPropertyError('beverageId')
     }
   }
 
