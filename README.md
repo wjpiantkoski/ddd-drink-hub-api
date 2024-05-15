@@ -1,5 +1,5 @@
 # DrinkHub API
-This API is build following some DDD and clean architecture concepts. Like dependency injection and bounded context.
+This API is built following some DDD patterns, SOLID and Clean Architecture.
 
 ## How to start
 1. Create `.env` with the following values
